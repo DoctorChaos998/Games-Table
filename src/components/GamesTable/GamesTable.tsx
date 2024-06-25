@@ -70,12 +70,12 @@ const GamesTable = () => {
              key={info.header.id}>
                 Дата релиза
                 {{
-                    asc: <SortingContainer>
+                    desc: <SortingContainer>
                         <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M9.69214 8.5072L5.7236 3.90543C5.61001 3.77371 5.39128 3.77371 5.27648 3.90543L1.30794 8.5072C1.16051 8.6788 1.29343 8.93015 1.5315 8.93015H9.46858C9.70664 8.93015 9.83957 8.6788 9.69214 8.5072Z" fill="white"/>
                         </svg>
                     </SortingContainer>,
-                    desc: <SortingContainer>
+                    asc: <SortingContainer>
                         <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M9.46858 3.80664H1.5315C1.29343 3.80664 1.16051 4.058 1.30794 4.2296L5.27648 8.83136C5.39007 8.96308 5.6088 8.96308 5.7236 8.83136L9.69214 4.2296C9.83957 4.058 9.70664 3.80664 9.46858 3.80664Z" fill="white"/>
                         </svg>
@@ -151,14 +151,14 @@ const GamesTable = () => {
               currentPageNumber={table.getState().pagination.pageIndex + 1}
                rowCount={table.getRowCount()} pageCount={table.getPageCount()}
                 currentPageSize={table.getState().pagination.pageSize}
-            setPageSize={(pageSize: number) =>  table.setPageSize(pageSize)}/>
+            setPageSize={table.setPageSize}/>
         </TableWrapper>
     )
 }
 
 export default GamesTable
 
-const TableWrapper = styled.section({
+export const TableWrapper = styled.section({
     color: 'white',
     backgroundColor: '#181A20',
     overflow: "hidden",
@@ -171,12 +171,12 @@ const TableWrapper = styled.section({
     marginBottom: '100px',
 });
 
-const TableContainer = styled.table({
+export const TableContainer = styled.table({
     width: '100%',
     borderSpacing: '0px',
 });
 
-const TableBody = styled.tbody({
+export const TableBody = styled.tbody({
     maxHeight: '540px',
     overflowY: "scroll",
     display: "block",
@@ -196,7 +196,7 @@ const TableBody = styled.tbody({
     }
 });
 
-const SortingContainer = styled.div({
+export const SortingContainer = styled.div({
     display: "flex",
     flexDirection: "column",
     position: "absolute",
@@ -205,7 +205,7 @@ const SortingContainer = styled.div({
     gap: '1px'
 });
 
-const TableRow = styled.tr({
+export const TableRow = styled.tr({
     display: 'table',
     //tableLayout: 'fixed'
 });

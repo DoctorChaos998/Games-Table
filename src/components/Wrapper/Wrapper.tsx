@@ -1,10 +1,12 @@
 import styled from "styled-components"
 import GamesTable from "../GamesTable/GamesTable"
+import SecondGamesTable from "../SecondGamesTable/SecondGamesTable"
 
 const Wrapper = () => {
     return (
         <GamesTableWrapper>
             <GamesTable/>
+            <SecondGamesTable/>
         </GamesTableWrapper>
     )
 }
@@ -18,5 +20,7 @@ const GamesTableWrapper = styled.main({
     fontWeight: '500',
     fontSize: '14px',
     lineHeight: '22px',
+    flexDirection: "column",
+    alignItems: 'center'
 });
 
