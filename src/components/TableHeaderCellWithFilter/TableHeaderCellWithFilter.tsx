@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import TableHeaderCell from "../TableHeaderCell/TableHeaderCell";
 import styled from "styled-components";
+import filter from '../../shared/svg/filter.svg'
 
 interface ITableHeaderCellWithFilterProps {
     children: React.ReactNode,
     filerOptions: Record<string, string>,
-    handleDropDownItemClick: (newFilter: string) => void
+    handleDropDownItemClick: (newFilter: string) => void,
+    currentOption: string
 }
 
-const TableHeaderCellWithFilter = ({children, handleDropDownItemClick, filerOptions}: ITableHeaderCellWithFilterProps) => {
+const TableHeaderCellWithFilter = ({children, handleDropDownItemClick, filerOptions, currentOption}: ITableHeaderCellWithFilterProps) => {
     const [dropDownIsVisible, setDropDownIsVisible] = useState(false);
 
     useEffect(() => {
@@ -27,9 +29,11 @@ const TableHeaderCellWithFilter = ({children, handleDropDownItemClick, filerOpti
                 event.stopPropagation();
                 setDropDownIsVisible(!dropDownIsVisible);
             }}>
-                <svg width="20" height="23" viewBox="0 0 20 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8.08977 15.884C8.08977 16.0915 8.25617 16.259 8.46242 16.259H11.5374C11.7437 16.259 11.9101 16.0915 11.9101 15.884V13.5872H8.08977V15.884ZM14.3136 7.86841H5.68625C5.39914 7.86841 5.21985 8.1813 5.36399 8.43091L7.95735 12.8372H12.0448L14.6382 8.43091C14.78 8.1813 14.6007 7.86841 14.3136 7.86841Z" fill="white"/>
-                </svg>
+                <CurrentFilterOption>
+                        {filerOptions[currentOption]}
+                </CurrentFilterOption>
+                <img src={filter} alt="filter">                 
+                </img>
                 {dropDownIsVisible&&
                     <DropDownContainer>
                         {Object.entries(filerOptions).map(option => <DropDownItem key={option[0]} onClick={(event) => {
@@ -61,7 +65,6 @@ const DropDownContainer = styled.ul({
     listStyle:"none",
     right: 0,
     borderRadius: '10px',
-    //overflow: "hidden",
     backdropFilter: 'blur(10px)',
     maxHeight: '200px',
     display: "block",
@@ -78,4 +81,11 @@ const DropDownItem = styled.li({
         backgroundColor: 'rgba(255, 255, 255, 0.2)'
     }
 });
+
+const CurrentFilterOption = styled.span({
+    position: "absolute",
+    color: 'rgba(255, 255, 255, 0.3)',
+    right: '30px',
+    top: '5px'
+})
 

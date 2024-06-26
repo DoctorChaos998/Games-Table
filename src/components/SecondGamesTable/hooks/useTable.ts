@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { IGame } from "../../../shared/types"
+import { IGame, sortingByDateType } from "../../../shared/types"
 import GameTableService from "../../../shared/http/GameTableService";
 
-type sortingByDateType = 'none'|'asc'|'desc';
+
 
 export const useTable = () => {
     const [originalTableData, setOriginalTableData] = useState<IGame[]>([]);
@@ -95,6 +95,7 @@ export const useTable = () => {
         getCanPreviousPage, toggleSorting,
         setCurrentGenreFilter, setCurrentPlatformFilter,
         getRowCount, setPageIndex, pageCount,
-        sortingByDate, setSortingByDate, setPageSize
+        sortingByDate, setSortingByDate, setPageSize,
+         currentPlatformFilter, currentGenreFilter
     };
 }

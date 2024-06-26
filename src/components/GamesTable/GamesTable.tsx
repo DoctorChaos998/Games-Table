@@ -18,6 +18,8 @@ import TableDataCell from "../TableDataCell/TableDataCell"
 import TableFooter from "../TableFooter/TableFooter"
 import TableHeaderCellWithFilter from "../TableHeaderCellWithFilter/TableHeaderCellWithFilter"
 import { genreFilter, platformFilter } from "../../shared/entities"
+import caretUp from '../../shared/svg/caret-up.svg'
+import caretDown from '../../shared/svg/caret-down.svg'
   
 
 const columnHelper = createColumnHelper<IGame>()
@@ -39,7 +41,7 @@ const GamesTable = () => {
             enableSorting: false
         }),
         columnHelper.accessor('genre', {
-            header: (info) => <TableHeaderCellWithFilter filerOptions={genreFilter} handleDropDownItemClick={(newGenre: string) => {
+            header: (info) => <TableHeaderCellWithFilter currentOption={currentGenreFilter} filerOptions={genreFilter} handleDropDownItemClick={(newGenre: string) => {
                 table.setPageIndex(0);
                 setCurrentGenreFilter(newGenre);
             }} key={info.header.id}>Жанр</TableHeaderCellWithFilter>,
@@ -47,7 +49,7 @@ const GamesTable = () => {
             enableSorting: false
         }),
         columnHelper.accessor('platform', {
-            header: (info) => <TableHeaderCellWithFilter filerOptions={platformFilter} handleDropDownItemClick={(newPlatform: string) => {
+            header: (info) => <TableHeaderCellWithFilter currentOption={currentPlatformFilter} filerOptions={platformFilter} handleDropDownItemClick={(newPlatform: string) => {
                 table.setPageIndex(0);
                 setCurrentPlatformFilter(newPlatform);
             }} key={info.header.id}>Платформа</TableHeaderCellWithFilter>,
@@ -71,30 +73,22 @@ const GamesTable = () => {
                 Дата релиза
                 {{
                     desc: <SortingContainer>
-                        <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.69214 8.5072L5.7236 3.90543C5.61001 3.77371 5.39128 3.77371 5.27648 3.90543L1.30794 8.5072C1.16051 8.6788 1.29343 8.93015 1.5315 8.93015H9.46858C9.70664 8.93015 9.83957 8.6788 9.69214 8.5072Z" fill="white"/>
-                        </svg>
+                        <img src={caretDown} alt="caretDown"></img>
                     </SortingContainer>,
                     asc: <SortingContainer>
-                        <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.46858 3.80664H1.5315C1.29343 3.80664 1.16051 4.058 1.30794 4.2296L5.27648 8.83136C5.39007 8.96308 5.6088 8.96308 5.7236 8.83136L9.69214 4.2296C9.83957 4.058 9.70664 3.80664 9.46858 3.80664Z" fill="white"/>
-                        </svg>
+                        <img src={caretUp} alt="CaretUp"></img>
                 </SortingContainer>,
                     }[info.header.column.getIsSorted() as string] ?? <SortingContainer>
-                    <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9.69214 8.5072L5.7236 3.90543C5.61001 3.77371 5.39128 3.77371 5.27648 3.90543L1.30794 8.5072C1.16051 8.6788 1.29343 8.93015 1.5315 8.93015H9.46858C9.70664 8.93015 9.83957 8.6788 9.69214 8.5072Z" fill="white"/>
-                    </svg>
-                    <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9.46858 3.80664H1.5315C1.29343 3.80664 1.16051 4.058 1.30794 4.2296L5.27648 8.83136C5.39007 8.96308 5.6088 8.96308 5.7236 8.83136L9.69214 4.2296C9.83957 4.058 9.70664 3.80664 9.46858 3.80664Z" fill="white"/>
-                    </svg>
+                    <img src={caretUp} alt="CaretUp"></img>
+                    <img src={caretDown} alt="caretDown"></img>
             </SortingContainer>}
              </TableHeaderCell>,
             cell: info => <TableDataCell key={info.cell.id}>{info.getValue()}</TableDataCell>,
             sortingFn: "alphanumeric",
             enableSorting: true
         }),
-    ], []);
-
+    ], [currentGenreFilter, currentPlatformFilter]);
+    
     const table = useReactTable({
         data,
         columns,
@@ -169,6 +163,7 @@ export const TableWrapper = styled.section({
     flexDirection: 'column',
     boxSizing: "border-box",
     marginBottom: '100px',
+    zIndex: 1
 });
 
 export const TableContainer = styled.table({

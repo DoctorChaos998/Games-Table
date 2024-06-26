@@ -1,12 +1,4 @@
-//import { platformFilterType } from "../types";
-
 import { genreFilterType, platformFilterType } from "../types";
-
-// export const platformFilter: Record<platformFilterType, string> = {
-//     pc: 'PC',
-//     browser: 'Browser',
-//     all: 's'
-// }
 
 export const platformFilter: Record<platformFilterType, string> = {
         pc: 'PC',

@@ -7,6 +7,8 @@ import TableHeaderCellWithFilter from "../TableHeaderCellWithFilter/TableHeaderC
 import { useTable } from "./hooks/useTable";
 import { SortingContainer, TableBody, TableContainer, TableRow, TableWrapper } from "../GamesTable/GamesTable";
 import TableFooter from "../TableFooter/TableFooter";
+import caretUp from '../../shared/svg/caret-up.svg'
+import caretDown from '../../shared/svg/caret-down.svg'
 
 interface IColumn {
     id: Omit<keyof IGame, 'id'>,
@@ -19,7 +21,7 @@ const SecondGamesTable = () => {
     const {pagination, setCurrentGenreFilter,
          setPageIndex, setCurrentPlatformFilter,
      paginetedRows,getCanNextPage, getCanPreviousPage, setPageSize,
-    getRowCount, pageCount, toggleSorting, sortingByDate} = useTable();
+    getRowCount, pageCount, toggleSorting, sortingByDate, currentGenreFilter, currentPlatformFilter} = useTable();
 
     const columns: IColumn[] = useMemo(() => {
         return [
@@ -30,7 +32,7 @@ const SecondGamesTable = () => {
             },
             {
                 id: 'genre',
-                header: () => <TableHeaderCellWithFilter filerOptions={genreFilter} handleDropDownItemClick={(newGenre: string) => {
+                header: () => <TableHeaderCellWithFilter currentOption={currentGenreFilter} filerOptions={genreFilter} handleDropDownItemClick={(newGenre: string) => {
                             setPageIndex(0);
                             setCurrentGenreFilter(newGenre);
                         }} key={'genre'}>Жанр</TableHeaderCellWithFilter>,
@@ -38,7 +40,7 @@ const SecondGamesTable = () => {
             },
             {
                 id: 'platform',
-                header: () => <TableHeaderCellWithFilter filerOptions={platformFilter} handleDropDownItemClick={(newPlatform: string) => {
+                header: () => <TableHeaderCellWithFilter currentOption={currentPlatformFilter} filerOptions={platformFilter} handleDropDownItemClick={(newPlatform: string) => {
                     setPageIndex(0);
                     setCurrentPlatformFilter(newPlatform);
                 }} key={'platform'}>Платформа</TableHeaderCellWithFilter>,
@@ -62,22 +64,14 @@ const SecondGamesTable = () => {
                     Дата релиза
                     {{
                         'asc': <SortingContainer>
-                            <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9.69214 8.5072L5.7236 3.90543C5.61001 3.77371 5.39128 3.77371 5.27648 3.90543L1.30794 8.5072C1.16051 8.6788 1.29343 8.93015 1.5315 8.93015H9.46858C9.70664 8.93015 9.83957 8.6788 9.69214 8.5072Z" fill="white"/>
-                            </svg>
+                            <img src={caretDown} alt="caretDown"></img>
                         </SortingContainer>,
                         'desc': <SortingContainer>
-                            <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9.46858 3.80664H1.5315C1.29343 3.80664 1.16051 4.058 1.30794 4.2296L5.27648 8.83136C5.39007 8.96308 5.6088 8.96308 5.7236 8.83136L9.69214 4.2296C9.83957 4.058 9.70664 3.80664 9.46858 3.80664Z" fill="white"/>
-                            </svg>
+                            <img src={caretUp} alt="CaretUp"></img>
                         </SortingContainer>,
                         'none': <SortingContainer>
-                        <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.69214 8.5072L5.7236 3.90543C5.61001 3.77371 5.39128 3.77371 5.27648 3.90543L1.30794 8.5072C1.16051 8.6788 1.29343 8.93015 1.5315 8.93015H9.46858C9.70664 8.93015 9.83957 8.6788 9.69214 8.5072Z" fill="white"/>
-                        </svg>
-                        <svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.46858 3.80664H1.5315C1.29343 3.80664 1.16051 4.058 1.30794 4.2296L5.27648 8.83136C5.39007 8.96308 5.6088 8.96308 5.7236 8.83136L9.69214 4.2296C9.83957 4.058 9.70664 3.80664 9.46858 3.80664Z" fill="white"/>
-                        </svg>
+                            <img src={caretUp} alt="CaretUp"></img>
+                            <img src={caretDown} alt="caretDown"></img>
                         </SortingContainer>
                         }[sortingByDate]}
                 </TableHeaderCell>,
@@ -85,6 +79,7 @@ const SecondGamesTable = () => {
             }
         ]
     }, [sortingByDate, toggleSorting]);
+
     return(
         <TableWrapper>
             <TableContainer>
